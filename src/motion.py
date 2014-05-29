@@ -7,14 +7,14 @@ import json
 import backend
 import postdata
 
-def write_default_settings(default_settings):
+default_settings = {'url':'',
+                    'apikey':''}
+
+def write_settings(settings=default_settings):
     with open('settings.json', 'w') as file:
-        file.write(json.dumps(default_settings))
+        file.write(json.dumps(settings))
 
-def get_settings(settings_file='settings.json'):
-    settings = {'url':'http://home.padman.id.au:8080/m2m/public/movements',
-                        'apikey':'a8a8f30fdd8249b1e51aa9118f15205708f652db'}
-
+def get_settings(settings_file='settings.json', settings=default_settings):
     with open(settings_file, 'r') as file:
         local_settings = json.load(file)
 
