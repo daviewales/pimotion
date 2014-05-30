@@ -1,19 +1,21 @@
-import urllib2
+#!/usr/bin/env python3
+
+import urllib.request
 import json
 
 def post_json(url, data):
     '''
-    post_json(url, json_data) --> json_response
+    Convert data to json, encode as bytes, post to specified url, and return response.
     '''
 
-    json_data = json.dumps(data)
+    json_data = json.dumps(data).encode('utf-8')
 
-    request = urllib2.Request(url)
+    request = urllib.request.Request(url)
     request.add_header('Content-Type', 'application/json')
 
-    response = urllib2.urlopen(request, json_data)
+    response = urllib.request.urlopen(request, json_data)
 
-    return response.read()
+    return response.read().decode('utf-8')
 
 if __name__ == '__main__':
     print("You aren't supposed to run this!!!")

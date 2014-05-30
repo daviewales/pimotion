@@ -15,14 +15,16 @@ just use `backend.py` as a library, and replace `motion.py` with your own code.
 
 Make sure you have the required dependencies, which  are as follows:
 
-* python
+* python3
 * numpy
 * picamera
 
-If you have Python and pip, you should be able to install the dependencies using the following commands after navigating to the project directory:
+If you have Python 3 and pip3, you should be able to install the dependencies using the following commands after navigating to the project directory:
 
     sudo apt-get build-dep python-numpy
 
-    sudo pip install -r requirements.txt
+    sudo pip3 install -r requirements.txt
+
+(Note that `pip3` may possibly be called `pip-3.2`, or `pip-3.3`, etc. Find out your Python version using `python3 -V`.)
 
 To run, Navigate to the `src` directory, and run `python motion.py`.

@@ -1,40 +1,17 @@
+#!/usr/bin/env python3
+
 import picamera
 import numpy
 
+# temporary import for mocking up functions...
+from mock_backend import *
+
 def get_motion():
     '''
-    get_motion() --> return {
-                             '1':{
-                                  'x':1024,
-                                  'y':768,
-                                  'radius': 5,
-                                  'captured': '2014-5-12 09:34:55',
-                                 },
-
-                             '2':{
-                                  'x':100,
-                                  'y':123,
-                                  'radius': 4,
-                                  'captured': '2014-5-12 09:34:56',
-                                 },
-                             }
+    Return list of dictionaries of coordinates of motion.
     '''
 
-    return {
-            '1':{
-                 'x':1024,
-                 'y':768,
-                 'radius': 5,
-                 'captured': '2014-5-12 09:34:55',
-                },
-
-            '2':{
-                 'x':100,
-                 'y':123,
-                 'radius': 4,
-                 'captured': '2014-5-12 09:34:56',
-                },
-            }
+    return mock_get_motion()
 
 
 if __name__ == '__main__':

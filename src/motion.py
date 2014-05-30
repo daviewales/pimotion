@@ -33,6 +33,7 @@ def main():
                 'movements': movements}   
 
         response = postdata.post_json(settings['url'], data)
+        print(json.dumps(data, sort_keys=False, indent=4))
         print(response)
 
 if __name__ == '__main__':
