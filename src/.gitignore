@@ -1,3 +1,6 @@
 *.swp
 *.pyc
 settings.json
+*.rgb
+*.jpeg
+*.yuv
