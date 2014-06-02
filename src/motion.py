@@ -27,10 +27,12 @@ def main():
     settings = get_settings(settings_file='settings.json')
 
     while True:
-        movements = backend.get_motion()
+        motion_generator = backend.get_motion_data()
+        motion = next(motion_generator)
+        print("Motion data is here:\n{}".format(motion))
 
         data = {'apikey': settings['apikey'],
-                'movements': movements}   
+                'movements': motion}   
 
         response = postdata.post_json(settings['url'], data)
         print(json.dumps(data, sort_keys=False, indent=4))

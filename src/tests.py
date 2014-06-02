@@ -8,7 +8,7 @@ class TestBackend(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.motion = backend.get_motion()
+        self.motion = backend.get_motion_data()
         self.correctly_formatted_motion_data = [
                                                 {
                                                  'x':1024,
