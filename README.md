@@ -2,6 +2,10 @@
 
 This repo contains simple motion detection code for the Raspberry Pi written in Python with picamera and numpy.
 
+*Note:*
+At the moment, this code works best in a bright room. Make sure that the camera is stationary,
+and there is a good light source.
+
 ## Settings
 
 This program is designed to be used with a remote database through a json api.
@@ -28,3 +32,7 @@ If you have Python 3 and pip3, you should be able to install the dependencies us
 (Note that `pip3` may possibly be called `pip-3.2`, or `pip-3.3`, etc. Find out your Python version using `python3 -V`.)
 
 To run, Navigate to the `src` directory, and run `python motion.py`.
+
+## More Info
+
+Travis test builds are [here.](https://travis-ci.org/daviewales/pimotion)

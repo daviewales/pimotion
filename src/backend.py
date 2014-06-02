@@ -5,9 +5,6 @@ import numpy
 import io
 import time
 
-import mock_backend
-
-
 def get_image(resolution=(640, 480)):
     '''
     Yield an image of specified resolution to a byte stream.
@@ -59,8 +56,8 @@ def motion_coordinates(difference_image, tile_width, tile_height, tile_motion):
     return coordinates
 
 
-def get_motion_data(resolution=(640, 480), threshold=20,
-                    tile_dimensions=(10, 10), tile_motion=1):
+def get_motion_data(resolution=(640, 480), threshold=32,
+                    tile_dimensions=(40, 40), tile_motion=1):
     '''
     Return list of lists of coordinates of motion.
     '''

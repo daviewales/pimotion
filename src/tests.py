@@ -9,21 +9,9 @@ class TestBackend(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.motion = backend.get_motion_data()
-        self.correctly_formatted_motion_data = [
-                                                {
-                                                 'x':1024,
-                                                 'y':768,
-                                                 'radius': 5,
-                                                 'captured': '2014-5-12 09:34:55',
-                                                },
-
-                                                {
-                                                 'x':14,
-                                                 'y':7,
-                                                 'radius': 1,
-                                                 'captured': '2014-5-12 09:34:56',
-                                                },
-                                               ]
+        self.correctly_formatted_motion_data = [[ 375, 85 ], 
+                                                [ 405, 305 ], 
+                                                [ 565, 105 ]]
 
     def test_get_motion_returns_correct_type(self):
         self.assertEqual(type(self.motion), type(self.correctly_formatted_motion_data))

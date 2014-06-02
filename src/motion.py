@@ -2,6 +2,7 @@
 
 # Python standard library imports
 import json
+import datetime
 
 # Local imports
 import backend
@@ -25,18 +26,24 @@ def get_settings(settings_file='settings.json', settings=default_settings):
 def main():
 
     settings = get_settings(settings_file='settings.json')
+    motion_generator = backend.get_motion_data()
 
     while True:
-        motion_generator = backend.get_motion_data()
         motion = next(motion_generator)
-        print("Motion data is here:\n{}".format(motion))
+        if motion:
+            current_time = datetime.datetime.now()
+            iso_time = current_time - datetime.timedelta(
+                    microseconds=current_time.microsecond)
+            iso_time = str(iso_time)
 
-        data = {'apikey': settings['apikey'],
-                'movements': motion}   
+            data = {'apikey': settings['apikey'],
+                    'movements': motion,
+                    'captured': iso_time}   
 
-        response = postdata.post_json(settings['url'], data)
-        print(json.dumps(data, sort_keys=False, indent=4))
-        print(response)
+            response = postdata.post_json(settings['url'], data)
+            print(json.dumps(data, sort_keys=False, indent=4))
+            print(response)
+
 
 if __name__ == '__main__':
     try:
