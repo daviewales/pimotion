@@ -19,13 +19,13 @@ def post_json(url, data):
         return response.read().decode('utf-8')
 
     except urllib.error.URLError:
-    try:
-        print("Error: Network lookup failed. Trying again...")
-        response = postdata.post_json(settings['url'], data)
-    except urllib.error.URLError:
-        print("Error: Network lookup failed after retry.",
-              "Giving up on this packet.")
-        pass
+        try:
+            print("Error: Network lookup failed. Trying again...")
+            response = urllib.request.urlopen(request, json_data)
+        except urllib.error.URLError:
+            print("Error: Network lookup failed after retry.",
+                  "Giving up on this packet.")
+            pass
 
 if __name__ == '__main__':
     print("You aren't supposed to run this!!!")

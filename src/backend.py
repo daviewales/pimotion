@@ -56,7 +56,7 @@ def motion_coordinates(difference_image, tile_width, tile_height, tile_motion):
     return coordinates
 
 
-def get_motion_data(resolution=(640, 480), threshold=32,
+def get_motion_data(resolution=(640, 480), threshold=64,
                     tile_dimensions=(40, 40), tile_motion=1):
     '''
     Return list of lists of coordinates of motion.

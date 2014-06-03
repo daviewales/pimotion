@@ -1,4 +1,5 @@
 {
-    'url': 'http://www.your.web.site/json/api/link',
-    'apikey': 'your-api-key'
+    "url": "http://www.your.web.site/json/api/link",
+    "apikey": "your-api-key",
+    "tile": 20
 }

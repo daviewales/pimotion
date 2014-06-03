@@ -37,8 +37,10 @@ def main():
             iso_time = str(iso_time)
 
             data = {'apikey': settings['apikey'],
-                    'movements': motion,
-                    'captured': iso_time}   
+                    'tile': settings['tile'],
+                    'frames': [{'captured': iso_time,
+                                'movements': motion}]
+                   }
 
             response = postdata.post_json(settings['url'], data)
             print(json.dumps(data, sort_keys=False, indent=4))
