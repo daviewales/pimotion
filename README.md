@@ -29,7 +29,11 @@ If you have Python 3 and pip3, you should be able to install the dependencies us
 
     sudo pip3 install -r requirements.txt
 
-(Note that `pip3` may possibly be called `pip-3.2`, or `pip-3.3`, etc. Find out your Python version using `python3 -V`.)
+Note that `pip3` may possibly be called `pip-3.2`, or `pip-3.3`, etc. Find out your Python version using `python3 -V`.
+
+Also note that while the dependencies for this project can be satisfied by running *just* the second line, users
+are advised to include the first line for performance reasons. `sudo apt-get build-dep python-numpy` installs
+a lot of very fast maths libraries for `numpy`, which **greatly** improve performance.
 
 To run, Navigate to the `src` directory, and run `python motion.py`.
 
