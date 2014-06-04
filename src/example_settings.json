@@ -1,5 +1,6 @@
 {
     "url": "http://www.your.web.site/json/api/link",
     "apikey": "your-api-key",
-    "tile": 20
+    "tile": 20,
+    "packet_interval":5
 }
