@@ -67,9 +67,9 @@ def main():
         data_queue = queue.Queue()
         running = threading.Event()
         running.set()
-        send_data_thread = threading.Thread(target=collate_and_send_data,
-                                            args=(data_queue, settings,
-                                                  running))
+        send_data_thread = threading.Thread(
+                target=collate_and_send_data,
+                args=(data_queue, settings, running))
         send_data_thread.start()
 
         for motion in backend.get_motion_data():
