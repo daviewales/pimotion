@@ -10,16 +10,24 @@ import threading
 import backend
 import postdata
 
-default_settings = {'url':'',
-                    'apikey':'',
-                    'tile':20,
-                    'packet_interval':5}
+default_settings = {'url': '',
+                    'apikey': '',
+                    'tile': 20,
+                    'packet_interval': 5}
+
 
 def write_settings(settings=default_settings):
+    '''Convert settings to json and write to file.'''
     with open('settings.json', 'w') as file:
         file.write(json.dumps(settings))
 
+
 def get_settings(settings_file='settings.json', settings=default_settings):
+    '''
+    Read settings from file.
+
+    Return settings, using default settings for any missing values.
+    '''
     with open(settings_file, 'r') as file:
         local_settings = json.load(file)
 
@@ -28,6 +36,9 @@ def get_settings(settings_file='settings.json', settings=default_settings):
 
 
 def collate_and_send_data(data_queue, settings, running):
+    '''
+    Group data into packet format, convert to json and send.
+    '''
     packet = {'apikey': settings['apikey'],
               'tile': settings['tile'],
               'frames': []}
@@ -40,10 +51,9 @@ def collate_and_send_data(data_queue, settings, running):
             data = data_queue.get(timeout=0.1)
             packet['frames'].append(data)
         except queue.Empty:
-            data = None
             pass
 
-        if packet['frames'] and time.time() >= send_time: 
+        if packet['frames'] and time.time() >= send_time:
             print(json.dumps(packet, sort_keys=False, indent=4))
             response = postdata.post_json(url, packet)
             print(response)
@@ -67,7 +77,6 @@ def main():
                 data = {'captured': time.strftime('%Y-%m-%d %H:%M:%S'),
                         'movements': motion}
                 data_queue.put(data)
-
 
     except KeyboardInterrupt:
         running.clear()

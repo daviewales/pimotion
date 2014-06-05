@@ -4,3 +4,4 @@ settings.json
 *.rgb
 *.jpeg
 *.yuv
+__pycache__

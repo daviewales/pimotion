@@ -5,6 +5,7 @@ import numpy
 import io
 import time
 
+
 def get_image(resolution=(640, 480)):
     '''
     Yield an image of specified resolution to a byte stream.
@@ -38,7 +39,9 @@ def difference_image(image1, image2, threshold):
 
 def motion_coordinates(difference_image, tile_width, tile_height, tile_motion):
     """
-    Split the image into tiles with dimensions 
+    Get the coordinates of motion from a difference_image.
+
+    Split the image into tiles with dimensions
     ``tile_width`` * ``tile_height``.
 
     Return the coordinates of the centre of each tile where the area of
@@ -50,7 +53,7 @@ def motion_coordinates(difference_image, tile_width, tile_height, tile_motion):
 
     coordinates = [[x + centre_offset_x, y + centre_offset_y]
                    for x in range(0, width, tile_width)
-                   for y in range(0, height, tile_height) 
+                   for y in range(0, height, tile_height)
                    if difference_image[y:y+tile_height, x:x+tile_width].sum()
                    >= tile_motion]
     return coordinates
