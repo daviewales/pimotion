@@ -39,4 +39,6 @@ To run, Navigate to the `src` directory, and run `python motion.py`.
 
 ## More Info
 
-Travis test builds are [here.](https://travis-ci.org/daviewales/pimotion)
+Travis test status is [here.](https://travis-ci.org/daviewales/pimotion)
+
+[![Build Status](https://travis-ci.org/daviewales/pimotion.svg?branch=master)](https://travis-ci.org/daviewales/pimotion)
