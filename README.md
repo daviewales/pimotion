@@ -10,10 +10,10 @@ and there is a good light source.
 
 This program is designed to be used with a remote database through a json api.
 You need to create a file called `settings.json`, and populate the `url` and `apikey` fields.
-An example file called `example_settings.json` is included in the  `src` directory.
+An example file called `example_settings.json` is included in the  `pimotion` directory.
 
 If you don't want to work with a remote website, or you want to create your own interface,
-just use `backend.py` as a library, and replace `motion.py` with your own code.
+just use `backend.py` as a module, and replace `motion.py` with your own code.
 
 ## Running
 
@@ -35,7 +35,7 @@ Also note that while the dependencies for this project can be satisfied by runni
 are advised to include the first line for performance reasons. `sudo apt-get build-dep python-numpy` installs
 a lot of very fast maths libraries for `numpy`, which **greatly** improve performance.
 
-To run, Navigate to the `src` directory, and run `python motion.py`.
+To run, Navigate to the `pimotion` directory, and run `python3 motion.py`.
 
 ## More Info
 
