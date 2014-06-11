@@ -6,6 +6,19 @@ import io
 import time
 
 
+def get_png_image(resolution=(640, 480)):
+    width, height = resolution
+    image_stream = io.BytesIO()
+
+    with picamera.PiCamera() as camera:
+        camera.resolution = resolution
+        camera.start_preview()
+        camera.capture(image_stream, format='png')
+
+    image_stream.seek(0)
+    return image_stream.read()
+
+
 def get_image(resolution=(640, 480)):
     '''
     Yield an image of specified resolution to a byte stream.
@@ -16,14 +29,6 @@ def get_image(resolution=(640, 480)):
 
     with picamera.PiCamera() as camera:
         camera.resolution = resolution
-        #camera.ISO = 200
-        #camera.awb_mode = 'off'
-        ##camera.awb_gains = 1
-        #camera.brightness = 50
-        #camera.contrast = 0
-        #camera.exposure_mode = 'antishake'
-        #camera.meter_mode = 'spot'
-        #camera.video_stabilization = True
         camera.start_preview()
         time.sleep(2)  # Let the camera 'warm up'.
 
@@ -52,26 +57,29 @@ def motion_coordinates(difference_image, tile_width, tile_height, tile_motion):
     Split the image into tiles with dimensions
     tile_width * tile_height.
 
-    Return the coordinates of the centre of each tile where the sum of 
+    Return the coordinates of the centre of each tile where the sum of
     motion pixels within the tile is >= tile_motion * tile_area.
     """
     height, width = difference_image.shape
     tile_area = tile_height * tile_width
+
+    # tile_motion * tile_area gives the total number of
+    # changed pixels within a given tile required for
+    # motion to be registered.
+    changed_pixel_threshold = tile_motion * tile_area
     centre_offset_x, centre_offset_y = tile_width//2, tile_height//2
 
-    coordinates = [[x + centre_offset_x, y + centre_offset_y]
-                   for x in range(0, width, tile_width)
-                   for y in range(0, height, tile_height)
-                   if difference_image[y:y+tile_height, x:x+tile_width].sum()
-                   >= tile_motion * tile_area]
-                   # tile_motion * tile_area gives the total number of 
-                   # changed pixels within a given tile required for
-                   #motion to be registered.
+    coordinates = [
+        [x + centre_offset_x, y + centre_offset_y]
+        for x in range(0, width, tile_width)
+        for y in range(0, height, tile_height)
+        if difference_image[y:y+tile_height, x:x+tile_width].sum()
+        >= changed_pixel_threshold]
     return coordinates
 
 
-def get_motion_data(resolution=(640, 480), threshold=32,
-                    tile_dimensions=(40, 40), tile_motion=0.5):
+def get_motion_data(resolution=(640, 480), threshold=16,
+                    tile_dimensions=(20, 20), tile_motion=0.8):
     '''
     Return list of lists of coordinates of motion.
 
@@ -84,11 +92,12 @@ def get_motion_data(resolution=(640, 480), threshold=32,
     tile_dimensions is a tuple containing the dimensions of the tiles
     which the image will be divided into to check for motion.
     tile_dimensions = (width, height).
-    
+
     tile_motion is the fraction of a given tile which must contain motion
     for motion to be registered. For instance, if we are using 20x20 tiles,
     then the total number of pixels contained in a given tile is 400 pixels.
-    If tile_motion == 1, then a tile will not be registerred as containing motion
+    If tile_motion == 1, then a tile will not be registerred as containing
+    motion
     if < 400 pixels within the tile contain motion.
     However, if tile_motion == 0.5, then only half the tile must contain motion
     in order for the tile to be registered as motion.

@@ -11,21 +11,23 @@ except:
 import backend
 
 
-
-# Backend tests
 class TestBackend(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        mock_images = [numpy.load('test_files/image{}.npy'.format(i)) for i in range(1,3)]
+        mock_images = [
+            numpy.load('test_files/image{}.npy'.format(i))
+            for i in range(1, 3)]
+
         mock_get_image = mock.patch('backend.get_image', autospec=True).start()
         mock_get_image.return_value = itertools.cycle(mock_images)
 
         self.motion_generator = backend.get_motion_data()
         self.motion = next(self.motion_generator)
-        self.correctly_formatted_motion_data = [[375, 85],
-                                                [405, 305],
-                                                [565, 105]]
+        self.correctly_formatted_motion_data = [
+            [375, 85],
+            [405, 305],
+            [565, 105]]
 
         self.tile_width = 10
         self.tile_height = 10
@@ -33,11 +35,14 @@ class TestBackend(unittest.TestCase):
         self.tile_centre = [self.tile_width/2, self.tile_height/2]
         self.tile_motion = 1
         self.complete_motion_tile = numpy.ones(
-                (self.tile_height, self.tile_width), dtype=numpy.bool)
+            (self.tile_height, self.tile_width), dtype=numpy.bool)
+
         self.zero_motion_tile = numpy.zeros(
-                (self.tile_height, self.tile_width), dtype=numpy.bool)
+            (self.tile_height, self.tile_width), dtype=numpy.bool)
+
         self.half_motion_tile = numpy.ones(
-                (self.tile_height, self.tile_width), dtype=numpy.bool)
+            (self.tile_height, self.tile_width), dtype=numpy.bool)
+
         self.half_motion_tile[0:10, 0:5] = self.zero_motion_tile[0:10, 0:5]
 
     def test_get_motion_returns_correct_type(self):
@@ -57,7 +62,6 @@ class TestBackend(unittest.TestCase):
         for value in self.motion:
             self.assertEqual(type(value[0]), type(1))
             self.assertEqual(type(value[1]), type(1))
-
 
     def test_motion_coordinates_correct_for_complete_motion(self):
         '''tile with 100% motion should return coordinates of tile centre'''
@@ -83,19 +87,22 @@ class TestBackend(unittest.TestCase):
         for i in range(11):
             self.tile_motion = 0.1*i
             if self.tile_motion <= 0.5:
-                message = ('motion coordinates should be found when '
-                           'tile contains 50% motion and '
-                           '`tile_motion == {:.2f}`.'.format(self.tile_motion))
+                message = (
+                    'motion coordinates should be found when '
+                    'tile contains 50% motion and '
+                    '`tile_motion == {:.2f}`.'.format(self.tile_motion))
+
                 valid_coordinates = [self.tile_centre]
                 coordinates = backend.motion_coordinates(
-                        self.half_motion_tile,
-                        self.tile_width,
-                        self.tile_height,
-                        self.tile_motion)
+                    self.half_motion_tile,
+                    self.tile_width,
+                    self.tile_height,
+                    self.tile_motion)
+
                 self.assertEqual(
-                        valid_coordinates,
-                        coordinates,
-                        msg = message)
+                    valid_coordinates,
+                    coordinates,
+                    msg=message)
 
             else:
                 message = ('motion coordinates should not be found when '
@@ -103,17 +110,15 @@ class TestBackend(unittest.TestCase):
                            '`tile_motion == {:.2f}`.'.format(self.tile_motion))
                 valid_coordinates = []
                 coordinates = backend.motion_coordinates(
-                        self.half_motion_tile,
-                        self.tile_width,
-                        self.tile_height,
-                        self.tile_motion)
+                    self.half_motion_tile,
+                    self.tile_width,
+                    self.tile_height,
+                    self.tile_motion)
+
                 self.assertEqual(
-                        valid_coordinates,
-                        coordinates,
-                        msg = message)
-
-
-
+                    valid_coordinates,
+                    coordinates,
+                    msg=message)
 
 
 if __name__ == '__main__':

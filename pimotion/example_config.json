@@ -1,0 +1,10 @@
+{
+    "url": "http://motionmap.tk/movements",
+    "image_url": "http://motionmap.tk/cameras",
+    "apikey": "e1fbec034e288192cca39ff74f4a98e1bac3c43f",
+    "packet_interval": 5,
+    "tile": 20,
+    "threshold": 10,
+    "resolution": [640, 480],
+    "tile_motion": 0.5
+}
